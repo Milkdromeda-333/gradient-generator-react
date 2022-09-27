@@ -1,4 +1,4 @@
-# Gradient generater
+# Gradient generator
 
 This is a CSS gradient generator made with React(installed with Vite), and using [98.css by @jdan on github](https://github.com/jdan/98.css) for styling.
 
