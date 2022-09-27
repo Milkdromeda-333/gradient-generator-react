@@ -1,29 +1,39 @@
 import { useState } from "react";
 
 /*
-Project: build a gradient generator that outputs generated css gradient for multiple browswers. form takes in colors, and angle, and direction.
-IDEA: 
 TODO:
 -[]add option of additional colors
 -[]add ability to view saved gradients
+-[]make it easy to copy paste
 
 */
 function App() {
+  // current gradient in the gradient viewer
   const [gradient, setGradient] = useState("linear-gradient(to bottom right, #ff0000, #ffff00)");
 
+  // saves inputs before they are submitted as theyre being put in
   const [inputsObj, setInputsObj] = useState({
     color1: "#ff0000",
     color2: "#ffff00",
     direction: "to bottom right"
   });
 
-  // takes the input an sets gradient to returned input
+  // the generated css to be displayed
+  const [generatedCSS, setGeneratedCSS] = useState(`background: linear-gradient(to bottom right, #ff0000, #ffff00); 
+-moz-background: linear-gradient(to bottom right, #ff0000, #ffff00); 
+-webkit: linear-gradient(to bottom right, #ff0000, #ffff00)
+  `);
+
+  // takes the input an sets gradient to returned input, and sets the generated css in the textarea
   function handleSubmit(e) {
     e.preventDefault();
     setGradient(`linear-gradient(${inputsObj.direction}, ${inputsObj.color1}, ${inputsObj.color2})`);
+    setGeneratedCSS(`background: linear-gradien(${inputsObj.direction}, ${inputsObj.color1}, ${inputsObj.color2}); 
+-moz-background: linear-gradient(${inputsObj.direction}, ${inputsObj.color1}, ${inputsObj.color2}); 
+-webkit: linear-gradient(${inputsObj.direction}, ${inputsObj.color1}, ${inputsObj.color2})`);
   }
 
-  // updates inputs in form
+  // updates inputs in form as it is put in
   function handleChange(e) {
     const { name, value } = e.target;
     setInputsObj(prevState => ({
@@ -40,7 +50,7 @@ function App() {
       <main>
         <section className="gradient">
           <div className="gradient--viewer" style={{ background: gradient }}></div>
-          <textarea readOnly value={gradient} />
+          <textarea readOnly value={generatedCSS} />
         </section>
 
         <form onSubmit={handleSubmit}>
