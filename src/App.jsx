@@ -4,8 +4,6 @@ import { useState } from "react";
 TODO:
 -[]add option of additional colors
 -[]add ability to view saved gradients
--[]make it easy to copy paste
-
 */
 function App() {
   // current gradient in the gradient viewer
@@ -26,9 +24,8 @@ function App() {
 
   // takes the input an sets gradient to returned input, and sets the generated css in the textarea
   function handleSubmit(e) {
-    e.preventDefault();
     setGradient(`linear-gradient(${inputsObj.direction}, ${inputsObj.color1}, ${inputsObj.color2})`);
-    setGeneratedCSS(`background: linear-gradien(${inputsObj.direction}, ${inputsObj.color1}, ${inputsObj.color2}); 
+    setGeneratedCSS(`background: linear-gradient(${inputsObj.direction}, ${inputsObj.color1}, ${inputsObj.color2}); 
 -moz-background: linear-gradient(${inputsObj.direction}, ${inputsObj.color1}, ${inputsObj.color2}); 
 -webkit: linear-gradient(${inputsObj.direction}, ${inputsObj.color1}, ${inputsObj.color2})`);
   }
@@ -42,6 +39,16 @@ function App() {
     }));
   }
 
+  const copyBtn = document.getElementById("copy-btn");
+
+  function copyCSS() {
+    const textField = document.getElementsByTagName("textarea")[0];
+    textField.select();
+    // for mobile
+    textField.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(textField.value);
+  }
+
   return (
     <div>
       <header>
@@ -53,7 +60,7 @@ function App() {
           <textarea readOnly value={generatedCSS} />
         </section>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={e => e.preventDefault()}>
           <label htmlFor="color1">
             Color 1:
             <input type="color" name="color1" id="color1" onChange={handleChange} />
@@ -70,7 +77,8 @@ function App() {
             <option value="to bottom right">Top left to bottom right</option>
           </select>
 
-          <button>submit</button>
+          <button onClick={handleSubmit}>submit</button>
+          <button id="copy-btn" className="copy-btn" onClick={copyCSS}>Copy CSS</button>
         </form>
       </main>
     </div >

@@ -40,3 +40,11 @@ form {
   align-items: center;
   gap: 10px;
 }
+
+/* textarea {
+  background-image: url("https://img.icons8.com/windows/32/000000/clipboard-approve.png");
+  background-repeat: no-repeat;
+  background-position-y: 5%;
+  background-size: 20px;
+  background-position-x: 99%;
+} */
